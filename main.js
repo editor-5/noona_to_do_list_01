@@ -4,8 +4,11 @@ let taskList =[]
 addButton.addEventListener("click",addTask)
 
 function addTask(){
-    let taskContent = taskInput.value;
-    taskList.push(taskContent);
+    let task = {
+      taskContent: taskInput.value,
+      isComplete:false
+    }
+    taskList.push(task);
     console.log(taskList);
     render()
 }
@@ -14,7 +17,7 @@ function render(){
     let resultHTML = "";
     for(let i=0;i<taskList.length;i++){
         resultHTML += `<div class="task">
-          <div>${taskList[i]}</div>
+          <div>${taskList[i].taskContent}</div>
           <div>
             <button>Check</button>
             <button>Delete</button>
