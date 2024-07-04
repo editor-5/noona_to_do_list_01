@@ -13,6 +13,8 @@ let taskInput = document.getElementById("task-input");
 let addButton = document.getElementById("add-button");
 let tabs = document.querySelectorAll(".task-tabs div")
 let taskList =[]
+let mode ='all'
+let filterList = []
 addButton.addEventListener("click",addTask)
 
 for(let i=1;i<tabs.length;i++){
@@ -33,22 +35,31 @@ function addTask(){
 }
 
 function render(){
+    // 1. 내가 선택한 탭에 따라서
+    let list = []
+    if(mode ==='all'){
+      list = taskList;
+    }else if(mode === 'ongoing'){
+      list = filterList
+    }
+    // 2. 리스트를 달리 보여준다
+       
     let resultHTML = "";
-    for(let i=0;i<taskList.length;i++){
-      if(taskList[i].isComplete == true){
+    for(let i=0;i<list.length;i++){
+      if(list[i].isComplete == true){
         resultHTML += `<div class="task">
-          <div class="task-done">${taskList[i].taskContent}</div>
+          <div class="task-done">${list[i].taskContent}</div>
           <div>
-            <button onclick="toggleComplete('${taskList[i].id}')">Check</button>
-            <button onclick="deleteTask('${taskList[i].id}')">Delete</button>
+            <button onclick="toggleComplete('${list[i].id}')">Check</button>
+            <button onclick="deleteTask('${list[i].id}')">Delete</button>
           </div>
         </div>`;
       }else{
         resultHTML += `<div class="task">
-          <div>${taskList[i].taskContent}</div>
+          <div>${list[i].taskContent}</div>
           <div>
-            <button onclick="toggleComplete('${taskList[i].id}')">Check</button>
-            <button onclick="deleteTask('${taskList[i].id}')">Delete</button>
+            <button onclick="toggleComplete('${list[i].id}')">Check</button>
+            <button onclick="deleteTask('${list[i].id}')">Delete</button>
           </div>
         </div>`;
       }
@@ -79,8 +90,8 @@ function deleteTask(id){
 }
 
 function filter(event){
-  let mode = event.target.id
-  let filterList = []
+  mode = event.target.id
+  filterList = []
   if(mode === "all"){
     //전체 리스트를 보여준다
     render();
@@ -92,6 +103,7 @@ function filter(event){
         filterList.push(taskList[i])
       }
     }
+    render();
     console.log("진행중",filterList);
   }else if(mode === "done"){
     //끝나는 케이스
