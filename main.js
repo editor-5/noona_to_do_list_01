@@ -39,7 +39,7 @@ function render(){
     let list = []
     if(mode ==='all'){
       list = taskList;
-    }else if(mode === 'ongoing'){
+    }else if(mode === 'ongoing' || mode === "done"){
       list = filterList
     }
     // 2. 리스트를 달리 보여준다
@@ -108,6 +108,12 @@ function filter(event){
   }else if(mode === "done"){
     //끝나는 케이스
     //task.isComplete=true
+    for(let i=0;i<taskList.length;i++){
+      if(taskList[i].isComplete===true){
+        filterList.push(taskList[i]);
+      }
+    }
+    render();
   }
 }
 function randomIDGenerate(){
