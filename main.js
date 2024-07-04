@@ -79,7 +79,24 @@ function deleteTask(id){
 }
 
 function filter(event){
-  console.log("filter",event.target.id);
+  let mode = event.target.id
+  let filterList = []
+  if(mode === "all"){
+    //전체 리스트를 보여준다
+    render();
+  }else if(mode === "ongoing"){
+    //진행중인 아이템을 보여준다.
+    //task.isComplete=false
+    for(let i=0;i<taskList.length;i++){
+      if(taskList[i].isComplete === false){
+        filterList.push(taskList[i])
+      }
+    }
+    console.log("진행중",filterList);
+  }else if(mode === "done"){
+    //끝나는 케이스
+    //task.isComplete=true
+  }
 }
 function randomIDGenerate(){
   return Math.random().toString(36).substr(2, 16);
